@@ -35,6 +35,12 @@ public class PlayerControl : MonoBehaviour {
             this.sprRenderer.sprite = this.rightSprite;
             this.transform.Translate(new Vector3(1f, 0f));
         }
-
+        if (Input.anyKey)
+        {
+            foreach (GameObject objEnemy in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+               
+            }
+        }
 	}
 }
