@@ -27,7 +27,7 @@ public class InitGame : MonoBehaviour {
 		// 3 - Y Position im Stage
 		// 4 - Array Liste von verbundenen Raeumen
 
-		int stageSizeXY = 100;
+		int stageSizeXY = 50;
 		stage = new GameObject[stageSizeXY,stageSizeXY]; //TODO: clearStage, wenn vorher bereits eine stage da war!!
 		//int stageSizeY = 100;
 
@@ -35,8 +35,8 @@ public class InitGame : MonoBehaviour {
 		//alle Raeume erstellen und in die Raumliste eintragen
 		for (int roomNr = 0; roomNr < numberOfRooms; roomNr++) {
 			//neuen Raum erstellen
-			int roomX = Random.Range(2,10); // Breite des Raumes
-			int roomY = Random.Range(2,10); // Hoehe des Raumes
+			int roomX = Random.Range(5,20); // Breite des Raumes
+			int roomY = Random.Range(5,20); // Hoehe des Raumes
 			int posX = Random.Range(1,stageSizeXY-roomX-1); //Position des Raumes auf der X-Achse in der Stage -- einbezogen die Raumgroesse
 			int posY = Random.Range(1,stageSizeXY-roomY-1); //Position des Raumes auf der Y-Achse in der Stage
 
