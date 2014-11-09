@@ -37,12 +37,13 @@ public class InitGame : MonoBehaviour {
 	public void newStage()
 	{
 		int numberOfRooms = 5;
-		roomList = new int[numberOfRooms, 5];
+		roomList = new int[numberOfRooms, 6];
 		// 0 - roomX: Breite des Raumes
 		// 1 - roomY: Hoehe des Raumes
 		// 2 - X Position im Stage
 		// 3 - Y Position im Stage
-		// 4 - Array Liste von verbundenen Raeumen
+		// 4 - verbundener Raum 1
+		// 5 - verbundener Raum 2
 
 		stage = new GameObject[stageSizeXY,stageSizeXY]; //TODO: clearStage, wenn vorher bereits eine stage da war!!
 		//int stageSizeY = 100;
@@ -74,7 +75,21 @@ public class InitGame : MonoBehaviour {
 
 		
 		//TODO: Raeume (virtuell) verbinden
+		foreach(int room in roomList){
+			if (roomList[room,4] == null){
+				int rndRoom = Random.Range(0,numberOfRooms-1);
+				roomList[room,4] = rndRoom;
+			}
+			if (roomList[room,5] == null){
+				int rndRoom = Random.Range(0,numberOfRooms-1);
+				roomList[room,5] = rndRoom;
+			}
+		}
+
 		//kuerzester Weg zwischen den verbundenen Raeumen
+
+
+
 		//floors einfuegen
 
 		//Stage mit Mauern befuellen
