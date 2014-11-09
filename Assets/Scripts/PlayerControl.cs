@@ -7,6 +7,8 @@ public class PlayerControl : MonoBehaviour {
     private Sprite downSprite;
     private SpriteRenderer sprRenderer;
 
+	public InitGame initGame;
+
 	// Use this for initialization
 	void Start () {
         this.sprRenderer = GetComponent<SpriteRenderer>();
@@ -18,22 +20,30 @@ public class PlayerControl : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             this.sprRenderer.sprite = this.downSprite;
-            this.transform.Translate(new Vector3(0f, -1f));
+			if(initGame.IsNoWall((int)this.transform.position.x,(int)this.transform.position.y-1)){
+          	  this.transform.Translate(new Vector3(0f, -1f));
+			}
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             this.sprRenderer.sprite = this.upSprite;
-            this.transform.Translate(new Vector3(0f, 1f));
+			if(initGame.IsNoWall((int)this.transform.position.x,(int)this.transform.position.y+1)){
+            	this.transform.Translate(new Vector3(0f, 1f));
+			}
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             this.sprRenderer.sprite = this.leftSprite;
-            this.transform.Translate(new Vector3(-1f, 0f));
+			if(initGame.IsNoWall((int)this.transform.position.x-1,(int)this.transform.position.y)){
+      	     	 this.transform.Translate(new Vector3(-1f, 0f));
+			}
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             this.sprRenderer.sprite = this.rightSprite;
-            this.transform.Translate(new Vector3(1f, 0f));
+			if(initGame.IsNoWall((int)this.transform.position.x+1,(int)this.transform.position.y)){
+           		 this.transform.Translate(new Vector3(1f, 0f));
+			}
         }
 	}
 }
