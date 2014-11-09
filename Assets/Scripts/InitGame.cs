@@ -17,8 +17,7 @@ public class InitGame : MonoBehaviour {
     protected GameObject[] arrayEnemies;
     int stageSizeXY = 64;
 
-	public GameObject player;
-
+    public GameObject player, objDiamond;
 
 	// Use this for initialization
     public void Awake()
@@ -30,7 +29,7 @@ public class InitGame : MonoBehaviour {
 
 	public bool IsNoWall(int x, int y)
 	{
-		return (stage[x,y] == floor);
+		return (stage[x,y].tag == "Ground");
 	}
 
 	public void newStage()
@@ -112,8 +111,14 @@ public class InitGame : MonoBehaviour {
 
         refocusCamera(true);
         createEnemies();
+        placeElements();
 	}
+    void placeElements()
+    {
+        GameObject[] groundTiles = GameObject.FindGameObjectsWithTag("Ground");
+        objDiamond.transform.position = groundTiles[Random.Range(1, (int)groundTiles.Length)].transform.position;
 
+    }
     void refocusCamera(bool bStart)
     {
         Transform transCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
@@ -130,7 +135,7 @@ public class InitGame : MonoBehaviour {
     }
     public void createEnemies()
     {
-        this.arrayEnemies = new GameObject[10];
+        this.arrayEnemies = new GameObject[16];
         GameObject[] groundTiles = GameObject.FindGameObjectsWithTag("Ground");
         for (int i = 0; i < this.arrayEnemies.Length; i++)
         {

@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour {
             this.transform.LookAt(this.Player);
             if (Vector2.Distance(this.transform.position, this.Player.transform.position) <= this.TriggerDistance)
             {
-                this.transform.position = Vector3.MoveTowards(this.transform.position, this.Player.position, this.Velocity * Time.deltaTime);
+                this.transform.position = Vector3.MoveTowards(this.transform.position, this.Player.position, 1.2f * this.Velocity * Time.deltaTime);
                 //Destroy(GameObject.FindGameObjectWithTag("Player"));
                 // attack player
             }
@@ -62,10 +62,10 @@ public class Enemy : MonoBehaviour {
     {
         if (otherObject.gameObject.name == "Player")
         {
-            //Destroy(otherObject.gameObject);
             GameObject.Find("GameControl").GetComponent<InitGame>().respawnPlayer();
+            Destroy(this.gameObject);
         }
-        else if(otherObject.gameObject.tag == "Wall")
+        else if(otherObject.gameObject.name == "ConcreteWall")
         {
             bounceBack();
         }
