@@ -30,7 +30,7 @@ public class InitGame : MonoBehaviour {
 
 	public bool IsNoWall(int x, int y)
 	{
-		return (stage[x,y] == floor);
+		return (stage[x,y].tag == "Ground");
 	}
 
 	public void newStage()
