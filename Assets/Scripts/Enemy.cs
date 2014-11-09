@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour {
             }
             else
             {
-                if (GameObject.Find("GameControl").GetComponent<InitGame>().IsNoWall((int) this.transform.position.x, (int) this.transform.position.y))
+                if (GameObject.Find("GameControl").GetComponent<InitGame>().IsNoWall((int) this.transform.position.x - 1, (int) this.transform.position.y - 1))
                 {
                     Vector3 range = this.transform.position + getRndDirection();
                     this.transform.position = Vector2.MoveTowards(this.transform.position, range, this.Velocity / 2 * Time.deltaTime);

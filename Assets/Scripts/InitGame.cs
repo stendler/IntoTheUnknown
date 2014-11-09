@@ -7,7 +7,6 @@ public class InitGame : MonoBehaviour {
 
 	int[,] roomList;
 	int[,] floorTilesList;
-    //GameObject objDummy = new GameObject(); //TODO delete @unused
 
     public GameObject wall;
 	public GameObject floor;
@@ -19,8 +18,12 @@ public class InitGame : MonoBehaviour {
 
     public GameObject player, objDiamond;
     public GameObject objStairs;
-    public int highscore;
-
+    public static int highscore;
+    public static int Level = 1;
+    public int amountDiamonds = 4;
+    public int lifePoints = 100;
+    public Texture gameOverOverlay;
+    public bool gameOver = false;
 	// Use this for initialization
     public void Awake()
     {
@@ -28,7 +31,17 @@ public class InitGame : MonoBehaviour {
 		Start ();
            // dot tween
     }
-
+    public void OnGUI()
+    {
+        GUI.Box(new Rect(Screen.width - 120, 0, 100, 40), "Your score: " + highscore);
+        GUI.Box(new Rect(0, 0, 120, 40), "Your health: " + lifePoints);
+        if (this.lifePoints <= 0)
+        {
+            gameOver = false;
+            GUI.Box(new Rect(0, 0, Screen.width, Screen.height),"");
+            GUI.TextField(new Rect((Screen.width / 2) - 100, (Screen.height / 2) - 50, 100, 50), "GAME OVER!");
+        }
+    }
 	public bool IsNoWall(int x, int y)
 	{
 		return (stage[x,y].tag == "Ground");
@@ -125,16 +138,23 @@ public class InitGame : MonoBehaviour {
         spawnPoint.GetComponent<SpawnControl>().isPlayerSpawnPoint = true;
 
         GameObject.FindGameObjectWithTag("Player").transform.position = spawnPoint.transform.position;
-
         refocusCamera(true);
         createEnemies();
+        amountDiamonds = 4;
         placeElements();
 	}
     void placeElements()
     {
         GameObject[] groundTiles = GameObject.FindGameObjectsWithTag("Ground");
-        objDiamond.transform.position = groundTiles[Random.Range(1, (int)groundTiles.Length)].transform.position;
-        objStairs.transform.position = groundTiles[Random.Range(1, (int)groundTiles.Length)].transform.position;
+
+        for (int i = 1; i <= this.amountDiamonds; i++)
+        {
+            int j = Random.Range(1, (int)groundTiles.Length);
+            Instantiate(this.objDiamond, groundTiles[j].transform.position, Quaternion.identity);
+           
+        }
+            
+       
     }
     void refocusCamera(bool bStart)
     {
@@ -152,7 +172,7 @@ public class InitGame : MonoBehaviour {
     }
     public void createEnemies()
     {
-        this.arrayEnemies = new GameObject[16];
+        this.arrayEnemies = new GameObject[15 + (2 * InitGame.Level)];
         GameObject[] groundTiles = GameObject.FindGameObjectsWithTag("Ground");
         for (int i = 0; i < this.arrayEnemies.Length; i++)
         {
@@ -167,6 +187,11 @@ public class InitGame : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-	
+        if (this.amountDiamonds <= 0)
+        {
+            GameObject[] groundTiles = GameObject.FindGameObjectsWithTag("Ground");
+            objStairs.transform.position = groundTiles[Random.Range(1, (int)groundTiles.Length)].transform.position;
+            this.amountDiamonds += 1;
+        }
 	}
 }

@@ -49,6 +49,21 @@ public class PlayerControl : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D otherObj)
     {
-
+        if (otherObj.gameObject.tag == "Item")
+        {
+            Destroy(otherObj.gameObject);
+            InitGame.highscore += 10;
+            GameObject.Find("GameControl").GetComponent<InitGame>().amountDiamonds -= 1;
+        }
+        else if (otherObj.gameObject.tag == "Enemy")
+        {
+            Destroy(otherObj.gameObject);
+            GameObject.Find("GameControl").GetComponent<InitGame>().lifePoints -= 20;
+        }
+        else if (otherObj.gameObject.name == "Stairs")
+        {
+            InitGame.Level++;
+            Application.LoadLevel(Application.loadedLevel);
+        }
     }
 }
