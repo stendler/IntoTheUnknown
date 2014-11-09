@@ -17,7 +17,7 @@ public class InitGame : MonoBehaviour {
     protected GameObject[] arrayEnemies;
     int stageSizeXY = 64;
 
-	protected GameObject player;
+	public GameObject player;
 
 
 	// Use this for initialization
@@ -96,7 +96,12 @@ public class InitGame : MonoBehaviour {
 		//Skellet spawnen in random von flooTilesList
 
 	}
-
+    public void respawnPlayer()
+    {
+       // Instantiate(this.player,spawnPoint.transform.position,Quaternion.identity);
+        this.player.transform.position = spawnPoint.transform.position;
+        refocusCamera();
+    }
     void Start()
     {
         GameObject[] groundTiles = GameObject.FindGameObjectsWithTag("Ground");
@@ -105,11 +110,17 @@ public class InitGame : MonoBehaviour {
 
         GameObject.FindGameObjectWithTag("Player").transform.position = spawnPoint.transform.position;
 
-        Transform transCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
-        transCamera.position = spawnPoint.transform.position + CameraTracking.relativeDelta + new Vector3(0f,0f,-1f);
-
+        refocusCamera();
         createEnemies();
 	}
+
+    void refocusCamera()
+    {
+        Transform transCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+
+       // transCamera.position = Vector3.Lerp(this.)
+        transCamera.position = spawnPoint.transform.position + CameraTracking.relativeDelta + new Vector3(0f, 0f, -1f);
+    }
     public void createEnemies()
     {
         this.arrayEnemies = new GameObject[10];

@@ -62,7 +62,8 @@ public class Enemy : MonoBehaviour {
     {
         if (otherObject.gameObject.name == "Player")
         {
-            Destroy(otherObject.gameObject);
+            //Destroy(otherObject.gameObject);
+            GameObject.Find("GameControl").GetComponent<InitGame>().respawnPlayer();
         }
         else if(otherObject.gameObject.tag == "Wall")
         {
