@@ -10,7 +10,10 @@ public class InitGame : MonoBehaviour {
 
     public GameObject wall;
 	public GameObject floor;
+    public GameObject enemy;
     protected GameObject spawnPoint;
+    protected GameObject[] arrayEnemies;
+    int stageSizeXY = 64;
 
 	// Use this for initialization
     public void Awake()
@@ -30,7 +33,6 @@ public class InitGame : MonoBehaviour {
 		// 3 - Y Position im Stage
 		// 4 - Array Liste von verbundenen Raeumen
 
-		int stageSizeXY = 64;
 		stage = new GameObject[stageSizeXY,stageSizeXY]; //TODO: clearStage, wenn vorher bereits eine stage da war!!
 		//int stageSizeY = 100;
 
@@ -69,22 +71,36 @@ public class InitGame : MonoBehaviour {
 		}
 	//TODO: Raeume (virtuell) verbinden
 
-
-
 	}
 
     void Start()
     {
         GameObject[] groundTiles = GameObject.FindGameObjectsWithTag("Ground");
         spawnPoint = groundTiles[Random.Range(1, (int) groundTiles.Length)];
+        spawnPoint.GetComponent<SpawnControl>().isPlayerSpawnPoint = true;
 
         GameObject.FindGameObjectWithTag("Player").transform.position = spawnPoint.transform.position;
 
         Transform transCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
         transCamera.position = spawnPoint.transform.position + CameraTracking.relativeDelta + new Vector3(0f,0f,-1f);
 
+        createEnemies();
 	}
-	
+    public void createEnemies()
+    {
+        this.arrayEnemies = new GameObject[10];
+        GameObject[] groundTiles = GameObject.FindGameObjectsWithTag("Ground");
+        for (int i = 0; i < this.arrayEnemies.Length; i++)
+        {
+            int rndIndex = Random.Range(0, groundTiles.Length);
+            if (!groundTiles[rndIndex].GetComponent<SpawnControl>().isPlayerSpawnPoint)
+            {
+                this.enemy.GetComponent<Enemy>().movementDirection = (Enemy.MovementDirection) Random.Range(0, 2);
+                Instantiate(this.enemy,groundTiles[rndIndex].transform.position,this.transform.rotation);
+            }
+        }
+           
+    }
 	// Update is called once per frame
 	void Update () {
 	

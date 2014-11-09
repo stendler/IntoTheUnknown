@@ -34,17 +34,39 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        this.transform.LookAt(this.Player);
-        if (Vector2.Distance(this.transform.position, this.Player.transform.position) <= this.TriggerDistance)
+        if (this.Player)
         {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, this.Player.position, this.Velocity * Time.deltaTime);
-            // attack player
+            this.transform.LookAt(this.Player);
+            if (Vector2.Distance(this.transform.position, this.Player.transform.position) <= this.TriggerDistance)
+            {
+                this.transform.position = Vector3.MoveTowards(this.transform.position, this.Player.position, this.Velocity * Time.deltaTime);
+                //Destroy(GameObject.FindGameObjectWithTag("Player"));
+                // attack player
+            }
+            else
+            {
+                Vector3 range = this.transform.position + getRndDirection();
+                this.transform.position = Vector2.MoveTowards(this.transform.position, range, this.Velocity / 2 * Time.deltaTime);
+            }
+            this.transform.rotation = this.Player.rotation;
         }
-        else
-        {
-            Vector3 range = this.transform.position + getRndDirection();
-            this.transform.position = Vector2.MoveTowards(this.transform.position,range,this.Velocity / 2 * Time.deltaTime);
-        }
-        this.transform.rotation = this.Player.rotation;
+       
 	}
+
+    void bounceBack()
+    {
+        this.transform.Rotate(0, -180, 0);
+    }
+
+    void OnTriggerEnter2D(Collider2D otherObject)
+    {
+        if (otherObject.gameObject.name == "Player")
+        {
+            Destroy(otherObject.gameObject);
+        }
+        else if(otherObject.gameObject.tag == "Wall")
+        {
+            bounceBack();
+        }
+    }
 }

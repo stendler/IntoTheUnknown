@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SpawnControl : MonoBehaviour {
 
+    public bool isPlayerSpawnPoint = false;
 	// Use this for initialization
 	void Start () {
 	
@@ -12,4 +13,6 @@ public class SpawnControl : MonoBehaviour {
 	void Update () {
 	
 	}
+
+
 }
