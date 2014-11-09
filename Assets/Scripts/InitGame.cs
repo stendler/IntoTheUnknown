@@ -18,6 +18,8 @@ public class InitGame : MonoBehaviour {
     int stageSizeXY = 64;
 
     public GameObject player, objDiamond;
+    public GameObject objStairs;
+    public int highscore;
 
 	// Use this for initialization
     public void Awake()
@@ -117,7 +119,7 @@ public class InitGame : MonoBehaviour {
     {
         GameObject[] groundTiles = GameObject.FindGameObjectsWithTag("Ground");
         objDiamond.transform.position = groundTiles[Random.Range(1, (int)groundTiles.Length)].transform.position;
-
+        objStairs.transform.position = groundTiles[Random.Range(1, (int)groundTiles.Length)].transform.position;
     }
     void refocusCamera(bool bStart)
     {

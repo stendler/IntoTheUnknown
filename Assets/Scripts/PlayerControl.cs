@@ -46,4 +46,9 @@ public class PlayerControl : MonoBehaviour {
 			}
         }
 	}
+
+    public void OnTriggerEnter2D(Collider2D otherObj)
+    {
+
+    }
 }
