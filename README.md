@@ -1,4 +1,4 @@
-IntotheUnknown
+Into the Unknown
 ==============
 
-Unity Game Hackaton Berlin
+Unity Game Hackathon Berlin
