@@ -12,14 +12,20 @@ public class InitGame : MonoBehaviour {
     public GameObject wall;
 	public GameObject floor;
     protected GameObject spawnPoint;
+	protected GameObject player;
 
 	// Use this for initialization
     public void Awake()
     {
 		newStage ();
-
+		Start ();
            // dot tween
     }
+
+	public bool IsNoWall(int x, int y)
+	{
+		return (stage[x,y] == floor);
+	}
 
 	public void newStage()
 	{
