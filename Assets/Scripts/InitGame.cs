@@ -6,22 +6,32 @@ public class InitGame : MonoBehaviour {
 	protected GameObject[,] stage;
 
 	int[,] roomList;
+	int[,] floorTilesList;
     //GameObject objDummy = new GameObject(); //TODO delete @unused
 
     public GameObject wall;
 	public GameObject floor;
     public GameObject enemy;
     protected GameObject spawnPoint;
+
     protected GameObject[] arrayEnemies;
     int stageSizeXY = 64;
+
+	protected GameObject player;
+
 
 	// Use this for initialization
     public void Awake()
     {
 		newStage ();
-
+		Start ();
            // dot tween
     }
+
+	public bool IsNoWall(int x, int y)
+	{
+		return (stage[x,y] == floor);
+	}
 
 	public void newStage()
 	{
@@ -61,6 +71,11 @@ public class InitGame : MonoBehaviour {
 
 		}
 
+		
+		//TODO: Raeume (virtuell) verbinden
+		//kuerzester Weg zwischen den verbundenen Raeumen
+		//floors einfuegen
+
 		//Stage mit Mauern befuellen
 		for (int x = 0; x < stageSizeXY; x++) {
 			for (int y = 0; y < stageSizeXY; y++) {
@@ -69,7 +84,16 @@ public class InitGame : MonoBehaviour {
 				}
 			}
 		}
+
 	//TODO: Raeume (virtuell) verbinden
+
+		
+		// TODO: array mit liste der floors
+		//menge der floor tiles im stage array zaehlen
+		//floorTilesList = new int[menge,2]
+		//befuellen-> floorTilesList[numInList,0 -> x 1-> y]
+		
+		//Skellet spawnen in random von flooTilesList
 
 	}
 
