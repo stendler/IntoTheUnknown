@@ -4,6 +4,9 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: skeleton_move_0
     21300002: skeleton_move_1
+    21300004: skeleton_move_1
+    21300006: skeleton_move_2
+    21300008: skeleton_move_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -45,21 +48,41 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: skeleton_move_0
+    - name: skeleton_move_1
       rect:
         serializedVersion: 2
-        x: 138
-        y: 99
-        width: 110
-        height: 86
+        x: 13
+        y: 91
+        width: 105
+        height: 105
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: skeleton_move_1
       rect:
         serializedVersion: 2
-        x: 13
+        x: 140
         y: 91
+        width: 105
+        height: 105
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: skeleton_move_2
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 90
+        width: 105
+        height: 105
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: skeleton_move_3
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 0
         width: 105
         height: 105
       alignment: 0

@@ -3,27 +3,48 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
 
-    private Transform objPlayer;
+    public Transform Player;
     public float TriggerDistance = 2f;
     public float Velocity = 2.5f;
+    public enum MovementDirection
+    {
+        Horizontal = 0,
+        Vertial = 1,
+        Both = 2
+    }
+    public MovementDirection movementDirection = MovementDirection.Horizontal;
+    public bool restrictMovementToAxis = false;
 	// Use this for initialization
 	void Start () {
-        this.objPlayer = GameObject.FindGameObjectWithTag("Player").transform;
+
 	}
+
+    private Vector3 getRndDirection()
+    {
+        switch(this.movementDirection)
+        {
+            case MovementDirection.Horizontal:
+                return new Vector3(Random.Range(0.1f,0.5f),0f,0f);
+            case MovementDirection.Vertial:
+                return new Vector3(0f, Random.Range(0.1f, 0.5f),0f);
+            default:
+                return new Vector3(Random.Range(0.1f, 0.5f),Random.Range(0.1f,0.5f),0f);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        /*this.transform.LookAt(this.objPlayer);
-        if (Vector2.Distance(this.transform.position, this.objPlayer.transform.position) <= this.TriggerDistance)
+        this.transform.LookAt(this.Player);
+        if (Vector2.Distance(this.transform.position, this.Player.transform.position) <= this.TriggerDistance)
         {
-            Debug.Log("Player has been seen");
+            this.transform.position = Vector3.MoveTowards(this.transform.position, this.Player.position, this.Velocity * Time.deltaTime);
             // attack player
         }
         else
         {
-            float fixZ = this.transform.position.z;
-            this.transform.position += this.transform.forward * this.Velocity * Time.deltaTime;
-            this.transform.position.Set(this.transform.position.x, this.transform.position.y, fixZ);
-        }*/
+            Vector3 range = this.transform.position + getRndDirection();
+            this.transform.position = Vector2.MoveTowards(this.transform.position,range,this.Velocity / 2 * Time.deltaTime);
+        }
+        this.transform.rotation = this.Player.rotation;
 	}
 }

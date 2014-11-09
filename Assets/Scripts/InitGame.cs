@@ -3,12 +3,15 @@ using System.Collections;
 
 public class InitGame : MonoBehaviour {
     
-	GameObject[,] stage;
+	protected GameObject[,] stage;
+
 	int[,] roomList;
     //GameObject objDummy = new GameObject(); //TODO delete @unused
 
     public GameObject wall;
 	public GameObject floor;
+    protected GameObject spawnPoint;
+
 	// Use this for initialization
     public void Awake()
     {
@@ -19,7 +22,7 @@ public class InitGame : MonoBehaviour {
 
 	public void newStage()
 	{
-		int numberOfRooms = 4;
+		int numberOfRooms = 5;
 		roomList = new int[numberOfRooms, 5];
 		// 0 - roomX: Breite des Raumes
 		// 1 - roomY: Hoehe des Raumes
@@ -27,7 +30,7 @@ public class InitGame : MonoBehaviour {
 		// 3 - Y Position im Stage
 		// 4 - Array Liste von verbundenen Raeumen
 
-		int stageSizeXY = 100;
+		int stageSizeXY = 64;
 		stage = new GameObject[stageSizeXY,stageSizeXY]; //TODO: clearStage, wenn vorher bereits eine stage da war!!
 		//int stageSizeY = 100;
 
@@ -35,10 +38,10 @@ public class InitGame : MonoBehaviour {
 		//alle Raeume erstellen und in die Raumliste eintragen
 		for (int roomNr = 0; roomNr < numberOfRooms; roomNr++) {
 			//neuen Raum erstellen
-			int roomX = Random.Range(2,10); // Breite des Raumes
-			int roomY = Random.Range(2,10); // Hoehe des Raumes
-			int posX = Random.Range(1,stageSizeXY-roomX-1); //Position des Raumes auf der X-Achse in der Stage -- einbezogen die Raumgroesse
-			int posY = Random.Range(1,stageSizeXY-roomY-1); //Position des Raumes auf der Y-Achse in der Stage
+			int roomX = Random.Range(16,20); // Breite des Raumes
+			int roomY = Random.Range(16,20); // Hoehe des Raumes
+			int posX = Random.Range(2,stageSizeXY-roomX-1); //Position des Raumes auf der X-Achse in der Stage -- einbezogen die Raumgroesse
+			int posY = Random.Range(2,stageSizeXY-roomY-1); //Position des Raumes auf der Y-Achse in der Stage
 
 			roomList[roomNr,0] = roomX;
 			roomList[roomNr,1] = roomY;
@@ -50,6 +53,7 @@ public class InitGame : MonoBehaviour {
 				for(int y = 0; y < roomY; y++){
 					//Destroy(stage[posX+x,posY+y]);
 					stage[posX+x,posY+y] = Instantiate(floor, new Vector2(posX+x,posY+y), this.transform.rotation) as GameObject;
+                    stage[posX + x, posY + y].tag = "Ground";
 				}
 			}
 
@@ -71,7 +75,14 @@ public class InitGame : MonoBehaviour {
 
     void Start()
     {
-	    
+        GameObject[] groundTiles = GameObject.FindGameObjectsWithTag("Ground");
+        spawnPoint = groundTiles[Random.Range(1, (int) groundTiles.Length)];
+
+        GameObject.FindGameObjectWithTag("Player").transform.position = spawnPoint.transform.position;
+
+        Transform transCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        transCamera.position = spawnPoint.transform.position + CameraTracking.relativeDelta + new Vector3(0f,0f,-1f);
+
 	}
 	
 	// Update is called once per frame
