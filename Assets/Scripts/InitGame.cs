@@ -44,9 +44,6 @@ public class InitGame : MonoBehaviour {
     }
 	public bool IsNoWall(int x, int y)
 	{
-		if (stage [x, y] == null) {
-						return false;
-				}
 		return (stage[x,y].tag == "Ground");
 	}
 
@@ -68,10 +65,10 @@ public class InitGame : MonoBehaviour {
 		//alle Raeume erstellen und in die Raumliste eintragen
 		for (int roomNr = 0; roomNr < numberOfRooms; roomNr++) {
 			//neuen Raum erstellen
-			int roomX = Random.Range(5,20); // Breite des Raumes
-			int roomY = Random.Range(5,20); // Hoehe des Raumes
-			int posX = Random.Range(2,stageSizeXY-roomX-2); //Position des Raumes auf der X-Achse in der Stage -- einbezogen die Raumgroesse
-			int posY = Random.Range(2,stageSizeXY-roomY-2); //Position des Raumes auf der Y-Achse in der Stage
+			int roomX = Random.Range(16,20); // Breite des Raumes
+			int roomY = Random.Range(16,20); // Hoehe des Raumes
+			int posX = Random.Range(2,stageSizeXY-roomX-1); //Position des Raumes auf der X-Achse in der Stage -- einbezogen die Raumgroesse
+			int posY = Random.Range(2,stageSizeXY-roomY-1); //Position des Raumes auf der Y-Achse in der Stage
 
 			roomList[roomNr,0] = roomX;
 			roomList[roomNr,1] = roomY;
@@ -91,54 +88,19 @@ public class InitGame : MonoBehaviour {
 
 		
 		//TODO: Raeume (virtuell) verbinden
-		for(int room = 0; room < numberOfRooms; room++){
-			Debug.Log(room);
+		foreach(int room in roomList){
+			if (roomList[room,4] == null){
 				int rndRoom = Random.Range(0,numberOfRooms-1);
 				roomList[room,4] = rndRoom;
-				//Debug.Log(roomList[room,4]);
-				rndRoom = Random.Range(0,numberOfRooms-1);
+			}
+			if (roomList[room,5] == null){
+				int rndRoom = Random.Range(0,numberOfRooms-1);
 				roomList[room,5] = rndRoom;
+			}
 		}
 
 		//kuerzester Weg zwischen den verbundenen Raeumen
-		for(int room = 0; room < numberOfRooms; room++) {
-			int diffY1 = roomList[room,3] - roomList[room,1] - roomList[roomList[room,4],3];
-			int diffY2 = roomList[room,3] - roomList[roomList[room,4],3] + roomList[roomList[room,4],1];
-			int diffY;
-			int startY;
-			if(diffY1 > diffY2){
-				diffY = diffY2;
-				startY = roomList[room,3];
-			}else{
-				diffY = diffY1;
-				startY = roomList[room,3] - roomList[room,1];
-			}
-			int diffX1 = roomList[room,2] + roomList[room,0] - roomList[roomList[room,4],2];
-			int diffX2 = roomList[room,2] - roomList[roomList[room,4],2] - roomList[roomList[room,4],0];
-			int diffX;
-			int startX;
-			if(diffX1 > diffX2){
-				diffX = diffX2;
-				startX = roomList[room,2];
-			}else{
-				diffX = diffX1;
-				startX = roomList[room,2] + roomList[room,0];
-			}
-			//Y gang bauen
-			for(int y = 0; y < diffY; y++){
-				if(stage[startX,startY+y] == null){
-					stage[startX,startY+y] = Instantiate(floor, new Vector2(startX,startY+y), this.transform.rotation) as GameObject;
-				}
-			}
-			//X Gang bauen
-			for(int x = 0; x < diffX; x++){
-				if(stage[startX+x,startY] == null){
-					stage[startX+x,startY] = Instantiate(floor, new Vector2(startX+x,startY+diffY), this.transform.rotation) as GameObject;
-				}
-			}
 
-
-		}
 
 
 		//floors einfuegen
