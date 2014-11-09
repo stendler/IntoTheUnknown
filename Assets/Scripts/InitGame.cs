@@ -100,7 +100,7 @@ public class InitGame : MonoBehaviour {
     {
        // Instantiate(this.player,spawnPoint.transform.position,Quaternion.identity);
         this.player.transform.position = spawnPoint.transform.position;
-        refocusCamera();
+        refocusCamera(false);
     }
     void Start()
     {
@@ -110,16 +110,23 @@ public class InitGame : MonoBehaviour {
 
         GameObject.FindGameObjectWithTag("Player").transform.position = spawnPoint.transform.position;
 
-        refocusCamera();
+        refocusCamera(true);
         createEnemies();
 	}
 
-    void refocusCamera()
+    void refocusCamera(bool bStart)
     {
         Transform transCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
 
-       // transCamera.position = Vector3.Lerp(this.)
-        transCamera.position = spawnPoint.transform.position + CameraTracking.relativeDelta + new Vector3(0f, 0f, -1f);
+        if (bStart)
+        {
+            transCamera.position = spawnPoint.transform.position + CameraTracking.relativeDelta + new Vector3(0f, 0f, -1f);
+        }
+        else
+        {
+            transCamera.position = Vector3.Lerp(transCamera.position, spawnPoint.transform.position + CameraTracking.relativeDelta + new Vector3(0f, 0f, -1f),
+            10 * Time.deltaTime);
+        }
     }
     public void createEnemies()
     {
